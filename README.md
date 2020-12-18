@@ -1,4 +1,5 @@
-<h1 align="center">Welcome to Analisis & Perancangan Sistem Informasi di Galuh Motor 👋</h1>
+<h1 align="center">Analisis & Perancangan Sistem Informasi</br>Galuh Motor</h1>
+
 <p>
   <a href="https://github.com/richoandika/apsi_galuhmotor#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -47,6 +48,3 @@ Give a ⭐️ if this project helped you!
 
 Copyright © 2020 [Richo Andika](https://github.com/richoandika).<br />
 This project is [MIT](https://opensource.org/licenses/MIT) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
