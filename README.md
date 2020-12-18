@@ -12,7 +12,7 @@
   </a>
 </p>
 
-> Project ini dibuat untuk memenuhi tugas akhir &#34;ANALISIS & PERANCANGAN SISTEM INFORMASI&#34;. Selain itu, project ini juga sebagai salah satu syarat untuk menyel esaikan studi. Yang mana di dalamnya terdapat karakteristik atau hasil kajian literatur dari pelaksanaan suatu kegiatan.
+> Project ini dibuat untuk memenuhi tugas akhir &#34;ANALISIS & PERANCANGAN SISTEM INFORMASI&#34;. Selain itu, project ini juga sebagai salah satu syarat untuk menyelesaikan studi. Yang dimana aplikasi ini dibuat dari hasil analisis & perancangan untuk sebuah toko sparepart motor bernama Galuh Motor.
 
 ### 🏠 [Homepage](https://github.com/richoandika/apsi_galuhmotor#readme)
 
