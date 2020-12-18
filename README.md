@@ -1,6 +1,6 @@
 <h1 align="center">Analisis & Perancangan Sistem Informasi</br>Galuh Motor</h1>
 
-<p>
+<p align="center">
   <a href="https://github.com/richoandika/apsi_galuhmotor#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
