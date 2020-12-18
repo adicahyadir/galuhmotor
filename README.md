@@ -7,9 +7,6 @@
   <a href="https://opensource.org/licenses/MIT" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
-  <a href="https://twitter.com/richoandika" target="_blank">
-    <img alt="Twitter: richoandika" src="https://img.shields.io/twitter/follow/richoandika.svg?style=social" />
-  </a>
 </p>
 
 > Project ini dibuat untuk memenuhi tugas akhir &#34;ANALISIS & PERANCANGAN SISTEM INFORMASI&#34;. Selain itu, project ini juga sebagai salah satu syarat untuk menyelesaikan studi. Yang dimana aplikasi ini dibuat dari hasil analisis & perancangan untuk sebuah toko sparepart motor bernama Galuh Motor.
@@ -36,9 +33,7 @@ php artisan serve
 
 👤 **Richo Andika**
 
-* Twitter: [@richoandika](https://twitter.com/richoandika)
 * Github: [@richoandika](https://github.com/richoandika)
-* LinkedIn: [@richoandika](https://linkedin.com/in/richoandika)
 
 ## Show your support
 
