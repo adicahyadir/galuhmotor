@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\SuplayerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,52 +16,64 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/dashboard');
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/', function () {
+        return redirect('/dashboard');
+    });
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/absensi', function () {
+        return view('absensi.index');
+    })->name('absensi');
+
+    Route::get('/barang', function () {
+        return view('barang.index');
+    })->name('barang');
+
+    Route::get('/keuangan', function () {
+        return view('keuangan.index');
+    })->name('keuangan');
+
+    /** 
+     * Route Pegawai
+     **/
+    Route::get('/pegawai', 
+        [PegawaiController::class, 'index'])
+    ->name('pegawai');
+
+    /** 
+     * Route Suplayer
+     **/
+    Route::get('/suplayer', 
+        [SuplayerController::class, 'index'])
+    ->name('suplayer');
+
+    /** 
+     * Route Laporan
+     **/
+    Route::get('/laporan/absensi', 
+        [LaporanController::class, 'absensi'])
+    ->name('lapabsensi');
+
+    Route::get('/laporan/barang', 
+        [LaporanController::class, 'barang'])
+    ->name('lapbarang');
+    
+    Route::get('/laporan/keuangan', 
+        [LaporanController::class, 'keuangan'])
+    ->name('lapkeuangan');
+
+    Route::get('/laporan/penggajian', 
+        [LaporanController::class, 'penggajian'])
+    ->name('lappenggajian')
+    ;
+    Route::get('/laporan/transaksi', 
+        [LaporanController::class, 'transaksi'])
+    ->name('laptransaksi');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-Route::get('/absensi', function () {
-    return view('absensi.index');
-})->middleware(['auth'])->name('absensi');
-
-Route::get('/barang', function () {
-    return view('barang.index');
-})->middleware(['auth'])->name('barang');
-
-Route::get('/keuangan', function () {
-    return view('keuangan.index');
-})->middleware(['auth'])->name('keuangan');
-
-Route::get('/pegawai', function () {
-    return view('pegawai.index');
-})->middleware(['auth'])->name('pegawai');
-
-Route::get('/suplayer', function () {
-    return view('suplayer.index');
-})->middleware(['auth'])->name('suplayer');
-
-Route::get('/laporan/absensi', function () {
-    return view('laporan.index');
-})->middleware(['auth'])->name('lapabsensi');
-
-Route::get('/laporan/barang', function () {
-    return view('laporan.index');
-})->middleware(['auth'])->name('lapbarang');
-
-Route::get('/laporan/keuangan', function () {
-    return view('laporan.index');
-})->middleware(['auth'])->name('lapkeuangan');
-
-Route::get('/laporan/penggajian', function () {
-    return view('laporan.index');
-})->middleware(['auth'])->name('lappenggajian');
-
-Route::get('/laporan/transaksi', function () {
-    return view('laporan.index');
-})->middleware(['auth'])->name('laptransaksi');
 
 require __DIR__.'/auth.php';

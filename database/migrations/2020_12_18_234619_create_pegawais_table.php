@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration
+class CreatePegawaisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('pegawais', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('name');
+            $table->char('name', 100);
+            $table->string('address');
+            $table->char('phone', 15);
+            $table->string('photo');
             $table->timestamps();
+            $table->foreignId('user_id')->constrained();
         });
     }
 
@@ -27,6 +31,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('pegawais');
     }
 }

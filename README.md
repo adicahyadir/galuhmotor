@@ -20,14 +20,28 @@ composer install
 npm install
 ```
 
-## Usage
+## 🚀 Usage
 
 ```sh
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
+php artisan migrate:fresh --seed
 php artisan serve
+npm run watch
 ```
+
+## 🔮 Future
+
+TODO
+
+- [✅] Multi Login
+- [ ] Absensi
+- [ ] Kelola Barang
+- [ ] Kelola Keuangan
+- [ ] Kelola Pegawai
+- [ ] Kelola Suplayer
+- [ ] Laporan
 
 ## Author
 
