@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SuplayerController;
@@ -33,6 +34,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/barang', function () {
         return view('barang.index');
     })->name('barang');
+
+
+    /** 
+     * Route Pegawai
+     **/
+    Route::get('/kasir', 
+        [KasirController::class, 'index'])
+    ->name('kasir');
 
     Route::get('/keuangan', function () {
         return view('keuangan.index');

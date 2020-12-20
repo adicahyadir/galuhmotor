@@ -3,10 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kasir;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KasirController extends Controller
 {
+        /**
+     * All of the current user's projects.
+     */
+    protected $role_id;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->role_id = Auth::user()->role_id;
+            $this->user = auth()->user();
+            $mrole = new Role;
+            $data = $mrole->getRoleById($this->role_id);
+            if ($data != "kasir") {
+                return redirect('dashboard');
+            } else {
+                return $next($request);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +40,7 @@ class KasirController extends Controller
      */
     public function index()
     {
-        //
+        return view('kasir.index');
     }
 
     /**
