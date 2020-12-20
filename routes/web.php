@@ -4,6 +4,8 @@ use App\Http\Controllers\KasirController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SuplayerController;
+use App\Http\Controllers\SupplierController;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,8 +60,8 @@ Route::group(['middleware' => ['auth']], function () {
      * Route Suplayer
      **/
     Route::get('/suplayer', 
-        [SuplayerController::class, 'index'])
-    ->name('suplayer');
+        [SupplierController::class, 'index'])
+    ->name('supplier');
 
     /** 
      * Route Laporan

@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect(RouteServiceProvider::KASIR);
                 break;
             default:
-                echo "memek";
+                return redirect(RouteServiceProvider::PEGAWAI);
                 break;
         }
 

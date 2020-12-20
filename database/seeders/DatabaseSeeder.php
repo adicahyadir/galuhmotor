@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Pegawai;
 use App\Models\Role;
+use App\Models\Suplayer;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -54,6 +56,14 @@ class DatabaseSeeder extends Seeder
                 'phone' => $faker->e164PhoneNumber,
                 'photo' => 'test',
                 'user_id' => $user->id,
+            ]);
+        }
+
+        foreach (range(1,50) as $index) {
+            Supplier::create([
+                'name' => $faker->name,
+                'phone' => $faker->e164PhoneNumber,
+                'descriptions' => $faker->text($maxNbChars = 50),
             ]);
         }
         

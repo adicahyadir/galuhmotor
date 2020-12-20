@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
 use App\Models\Role;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PegawaiController extends Controller
+class SupplierController extends Controller
 {
     /**
      * All of the current user's projects.
@@ -39,10 +39,10 @@ class PegawaiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $pegawai = Pegawai::latest()->paginate(9);
+    {
+        $supplier = Supplier::latest()->paginate(9);
         
-        return view('pegawai.index', compact('pegawai'));
+        return view('supplier.index', compact('supplier'));
     }
 
     /**
@@ -69,10 +69,10 @@ class PegawaiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Pegawai $pegawai)
+    public function show(Supplier $supplier)
     {
         //
     }
@@ -80,10 +80,10 @@ class PegawaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pegawai $pegawai)
+    public function edit(Supplier $supplier)
     {
         //
     }
@@ -92,10 +92,10 @@ class PegawaiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pegawai $pegawai)
+    public function update(Request $request, Supplier $supplier)
     {
         //
     }
@@ -103,10 +103,10 @@ class PegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pegawai $pegawai)
+    public function destroy(Supplier $supplier)
     {
         //
     }
