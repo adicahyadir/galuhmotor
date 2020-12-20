@@ -38,6 +38,13 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
         ]);
 
+        User::create([
+            'name' => 'Kasir',
+            'email' => 'kasir@dummy.com',
+            'password' => Hash::make(123456),
+            'role_id' => 2,
+        ]);
+
         $user = User::first();
         $faker = Faker::create();
     	foreach (range(1,200) as $index) {

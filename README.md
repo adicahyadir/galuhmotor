@@ -31,6 +31,19 @@ php artisan serve
 npm run watch
 ```
 
+## 🚀 Login
+
+```sh
+Admin
+email: admin@dummy.com
+password: 123456 
+```
+```sh
+Admin
+email: kasir@dummy.com
+password: 123456 
+```
+
 ## 🔮 Future
 
 TODO
