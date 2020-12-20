@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSuplayersTable extends Migration
+class CreateBarangsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateSuplayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('suplayers', function (Blueprint $table) {
+        Schema::create('barangs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('descriptions');
+            $table->bigInteger('jenis');
+            $table->bigInteger('merk');
+            $table->char('harga_beli');
+            $table->char('harga_jual');
+            $table->bigInteger('suplayer');
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateSuplayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suplayers');
+        Schema::dropIfExists('barangs');
     }
 }

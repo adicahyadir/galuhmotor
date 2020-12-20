@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect(RouteServiceProvider::HOME);
                 break;
             case 'kasir':
-                echo "kasir";
+                return redirect(RouteServiceProvider::KASIR);
                 break;
             default:
                 echo "memek";
