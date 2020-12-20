@@ -35,7 +35,6 @@ npm run watch
 
 TODO
 
-- [✅] Multi Login
 - [ ] Absensi
 - [ ] Kelola Barang
 - [ ] Kelola Keuangan
