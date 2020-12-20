@@ -28,10 +28,10 @@ php artisan key:generate
 php artisan migrate
 php artisan migrate:fresh --seed
 php artisan serve
-npm run watch
+open in new tab => npm run watch
 ```
 
-## 🚀 Login
+## Login
 
 ```sh
 Admin
@@ -39,7 +39,7 @@ email: admin@dummy.com
 password: 123456 
 ```
 ```sh
-Admin
+Kasir
 email: kasir@dummy.com
 password: 123456 
 ```
