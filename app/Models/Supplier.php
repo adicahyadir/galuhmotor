@@ -16,4 +16,10 @@ class Supplier extends Model
         'phone',
         'descriptions'
     ];
+
+    public function deleteById($data)
+    {
+        $supplier = Supplier::find($data);
+        return $supplier->delete();    
+    }
 }

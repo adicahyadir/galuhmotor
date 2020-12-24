@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
                 'photo' => 'test',
                 'user_id' => $user->id,
             ]);
-        }
+        };
 
         foreach (range(1,50) as $index) {
             Supplier::create([
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
                 'phone' => $faker->e164PhoneNumber,
                 'descriptions' => $faker->text($maxNbChars = 50),
             ]);
-        }
+        };
         
     }
 }
