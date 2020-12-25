@@ -3,30 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
-use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PegawaiController extends Controller
 {
-    /**
-     * All of the current user's projects.
-     */
-    protected $role_id;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->role_id = Auth::user()->role_id;
-            $this->user = auth()->user();
-            $mrole = new Role;
-            $data = $mrole->getRoleById($this->role_id);
-            if ($data != "admin") {
+            $role = auth()->user()->roles->first()->name;
+            if ($role != "admin") {
                 return redirect('dashboard');
             } else {
                 return $next($request);
@@ -52,7 +37,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        //
+        return view('pegawai.create');
     }
 
     /**
@@ -63,7 +48,21 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'job' => 'required'
+        ]);
+        
+        dd($request->all());
+
+        
+        // Pegawai::create([
+        //     'name' => $request->name,
+        //     'address' => $request->address,
+        //     'phone' => $request->phone,
+        // ]);
     }
 
     /**

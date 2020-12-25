@@ -20,7 +20,6 @@ class CreatePegawaisTable extends Migration
             $table->char('phone', 15);
             $table->string('photo');
             $table->timestamps();
-            $table->foreignId('user_id')->constrained();
         });
     }
 

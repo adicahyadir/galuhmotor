@@ -22,32 +22,25 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-
-        Role::create([
-            'name' => 'admin',
-        ]);
-        Role::create([
-            'name' => 'kasir',
-        ]);
-        Role::create([
-            'name' => 'pegawai',
-        ]);
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'kasir']);
+        Role::create(['name' => 'pegawai']);
         
         User::create([
-            'name' => 'Admin',
             'email' => 'admin@dummy.com',
-            'password' => Hash::make(123456),
-            'role_id' => 1,
-        ]);
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find(1));
 
         User::create([
-            'name' => 'Kasir',
             'email' => 'kasir@dummy.com',
-            'password' => Hash::make(123456),
-            'role_id' => 2,
-        ]);
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find(2));
+        
+        User::create([
+            'email' => 'pegawai@dummy.com',
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find(3));
 
-        $user = User::first();
         $faker = Faker::create();
     	foreach (range(1,200) as $index) {
             Pegawai::create([
@@ -55,7 +48,7 @@ class DatabaseSeeder extends Seeder
                 'address' => $faker->address,
                 'phone' => $faker->e164PhoneNumber,
                 'photo' => 'test',
-                'user_id' => $user->id,
+                'user_id' => User::find(1)->id,
             ]);
         };
 

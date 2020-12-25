@@ -21,17 +21,17 @@ class SupplierController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-            $this->role_id = Auth::user()->role_id;
-            $this->user = auth()->user();
-            $mrole = new Role;
-            $data = $mrole->getRoleById($this->role_id);
-            if ($data != "admin") {
-                return redirect('dashboard');
-            } else {
-                return $next($request);
-            }
-        });
+        // $this->middleware(function ($request, $next) {
+        //     $this->role_id = Auth::user()->role_id;
+        //     $this->user = auth()->user();
+        //     $mrole = new Role;
+        //     $data = $mrole->getRoleById($this->role_id);
+        //     if ($data != "admin") {
+        //         return redirect('dashboard');
+        //     } else {
+        //         return $next($request);
+        //     }
+        // });
     }
     /**
      * Display a listing of the resource.

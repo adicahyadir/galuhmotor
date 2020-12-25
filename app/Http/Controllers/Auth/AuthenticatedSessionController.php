@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,37 +28,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
-        $role = new Role;
-        $data = $role->getRole($request->email);
-        $request->session()->regenerate();
         
-        switch ($data) {
-            case 'admin':
-                return redirect(RouteServiceProvider::HOME);
-                break;
-            case 'kasir':
-                return redirect(RouteServiceProvider::KASIR);
-                break;
-            default:
-                return redirect(RouteServiceProvider::PEGAWAI);
-                break;
-        }
+        $request->authenticate();
 
-        // $data = DB::table('users')->where('email', '=', $request->email)->get();;
-        // $id = $data[0]->id;
-        // $role = DB::table('role_user')->where('user_id', '=', $id)->get();
-        // dd($role);die;
-        // $i = false ;
-        // if ($i) {
-            
-            // $request->session()->regenerate();
-            // return redirect(RouteServiceProvider::HOME);
-        // } else {
-        //     echo "ok";
-        // }
+        $request->session()->regenerate();
 
-        // dd($request);
+        return redirect(RouteServiceProvider::HOME);
     }
 
     /**

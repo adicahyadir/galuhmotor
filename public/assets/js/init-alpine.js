@@ -70,5 +70,35 @@ function data() {
       this.isModalOpen = false
       this.trapCleanup()
     },
+    // Modal Pegawai
+    isModalOpenPegawai: false,
+    openModalPegawai() {
+      this.isModalOpenPegawai = true
+      this.trapCleanup = focusTrap(document.querySelector('#modal'))
+    },
+    closeModalPegawai() {
+      this.isModalOpenPegawai = false
+      this.trapCleanup()
+    },
+    // Modal Supplier
+    isModalOpenSupplier: false,
+    openModalSupplier() {
+      this.isModalOpenSupplier = true
+      this.trapCleanup = focusTrap(document.querySelector('#modal'))
+    },
+    closeModalSupplier() {
+      this.isModalOpenSupplier = false
+      this.trapCleanup()
+    },
+    // Modal Barang
+    isModalOpenBarang: false,
+    openModalBarang() {
+      this.isModalOpenBarang = true
+      this.trapCleanup = focusTrap(document.querySelector('#modal'))
+    },
+    closeModalBarang() {
+      this.isModalOpenBarang = false
+      this.trapCleanup()
+    },
   }
 }

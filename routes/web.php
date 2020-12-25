@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiController;
@@ -21,13 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::get('/', function () {
-        return redirect('/dashboard');
-    });
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', 
+        [DashboardController::class, 'index'])
+    ->name('dashboard');
 
     Route::get('/absensi', function () {
         return view('absensi.index');
@@ -52,9 +49,10 @@ Route::group(['middleware' => ['auth']], function () {
     /** 
      * Route Pegawai
      **/
-    Route::get('/pegawai', 
-        [PegawaiController::class, 'index'])
-    ->name('pegawai');
+    Route::resource('pegawai', PegawaiController::class);
+    // Route::get('/pegawai', 
+    //     [PegawaiController::class, 'index'])
+    // ->name('pegawai');
 
     /** 
      * Route Suplayer
