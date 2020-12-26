@@ -13,6 +13,7 @@ class Pegawai extends Model
         'name',
         'address',
         'phone',
+        'photo',
     ];
 
     public function users()

@@ -51,7 +51,6 @@ TODO
 - [ ] Absensi
 - [ ] Kelola Barang
 - [ ] Kelola Keuangan
-- [ ] Kelola Pegawai
 - [ ] Kelola Suplayer
 - [ ] Laporan
 

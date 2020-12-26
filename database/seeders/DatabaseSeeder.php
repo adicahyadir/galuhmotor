@@ -21,36 +21,48 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+        
         // \App\Models\User::factory(10)->create();
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'kasir']);
         Role::create(['name' => 'pegawai']);
         
+        // Admin
         User::create([
             'email' => 'admin@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(1));
+        Pegawai::create([
+            'name' => 'Admin Dummy',
+            'address' => $faker->streetAddress,
+            'phone' => $faker->e164PhoneNumber,
+            'photo' => 'default.png',
+        ])->users()->attach(User::find(1));
 
+        // Kasir
         User::create([
             'email' => 'kasir@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(2));
-        
+        Pegawai::create([
+            'name' => 'Kasir Dummy',
+            'address' => $faker->streetAddress,
+            'phone' => $faker->e164PhoneNumber,
+            'photo' => 'default.png',
+        ])->users()->attach(User::find(2));
+
+        // Pegawai
         User::create([
             'email' => 'pegawai@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(3));
-
-        $faker = Faker::create();
-    	foreach (range(1,200) as $index) {
-            Pegawai::create([
-                'name' => $faker->name,
-                'address' => $faker->address,
-                'phone' => $faker->e164PhoneNumber,
-                'photo' => 'test',
-                'user_id' => User::find(1)->id,
-            ]);
-        };
+        Pegawai::create([
+            'name' => 'Pegawai Dummy',
+            'address' => $faker->streetAddress,
+            'phone' => $faker->e164PhoneNumber,
+            'photo' => 'default.png',
+        ])->users()->attach(User::find(3));
 
         foreach (range(1,50) as $index) {
             Supplier::create([

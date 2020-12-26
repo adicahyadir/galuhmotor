@@ -6,31 +6,40 @@
     </x-slot>
 
     <div class="flex items-center justify-between p-4 mb-5">
-        <h2 class="text-lg font-semibold text-gray-600 dark:text-gray-300" > Daftar Pegawai </h2>
+        <h2 class="text-lg font-semibold text-gray-600 dark:text-gray-300" > Ubah Data Pegawai </h2>
     </div>
 
-    <form method="POST" action="{{ route('pegawai.store') }}">
+    <form method="POST" action="{{ route('pegawai.update', $id) }}">
         @csrf
+        @method('PUT')
         <div class="px-4 py-3 mb-5 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Nama</span>
-                <input id="name" name="name" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="John Doe"/>
+                <input id="name" name="name" value="{{ $name }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="John Doe"/>
             </label>
             <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Alamat</span>
-                <textarea name="address" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" rows="3" placeholder="Jl. Anggur No. 10"></textarea>
+                <textarea name="address" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" rows="3" placeholder="Jl. Anggur No. 10">{{ $address }}</textarea>
             </label>
             <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">No. Hp</span>
-                <input id="phone" name="phone" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="08XXXXXXXXXX"/>
+                <input id="phone" name="phone" value="{{ $phone }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="08XXXXXXXXXX"/>
             </label>
             <label class="block mt-4 mb-2 text-sm">
                 <span class="text-gray-700 dark:text-gray-400"> Jabatan </span>
                 <select name="job" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
+                    @foreach ($roles as $r)
+                    <option value="{{ $r->id }}" {{$role == $r->id ? 'selected' : '' }}>{{ ucfirst($r->name) }}</option>
                     @endforeach
                 </select>
+            </label>
+            <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Email</span>
+                <input id="email" type="email" name="email" value="{{ $email }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" disabled/>
+            </label>
+            <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Password Baru</span>
+                <input id="password" type="password" name="password" value="" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="******"/>
             </label>
         </div>
         <div class="flex mt-4 items-center justify-between">
