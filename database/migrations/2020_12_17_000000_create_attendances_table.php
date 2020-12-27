@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePegawaiUserPivotTable extends Migration
+class CreateAttendancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatePegawaiUserPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('pegawai_user', function (Blueprint $table) {
-            $table->integer('pegawai_id');
-            $table->integer('user_id');
-            $table->primary(['pegawai_id', 'user_id']);
+        Schema::create('attendances', function (Blueprint $table) {
+            $table->id()->autoIncrement();
+            $table->dateTime('in')->nullable();
+            $table->dateTime('out')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ class CreatePegawaiUserPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pegawai_user');
+        Schema::dropIfExists('attendances');
     }
 }

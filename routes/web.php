@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SuplayerController;
 use App\Http\Controllers\SupplierController;
+use App\Models\Employee;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +28,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 
         [DashboardController::class, 'index'])
     ->name('dashboard');
-
-    Route::get('/absensi', function () {
-        return view('absensi.index');
-    })->name('absensi');
+    
+    Route::resource('absensi', AttendanceController::class);
 
     Route::get('/barang', function () {
         return view('barang.index');
@@ -49,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
     /** 
      * Route Pegawai
      **/
-    Route::resource('pegawai', PegawaiController::class);
+    Route::resource('pegawai', EmployeeController::class);
     // Route::get('/pegawai', 
     //     [PegawaiController::class, 'index'])
     // ->name('pegawai');

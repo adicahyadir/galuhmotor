@@ -12,11 +12,10 @@ class Attendance extends Model
     protected $fillable = [
         'in',
         'out',
-        'pegawai_id',
     ];
 
-    public function employee()
+    public function employees()
     {
-        return $this->belongsToMany(Pegawai::class);
+        return $this->belongsToMany(Employee::class);
     }
 }

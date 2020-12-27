@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,29 +10,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class PegawaiController extends Controller
+class EmployeeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $role = auth()->user()->roles->first()->name;
-            if ($role != "admin") {
-                return redirect('/');
-            } else {
-                return $next($request);
-            }
-        });
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $datas = User::first()->paginate(9);
 
-        return view('pegawai.index', compact('datas'));
+        return view('employee.index', compact('datas'));
     }
 
     /**
@@ -43,7 +32,8 @@ class PegawaiController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('pegawai.create', compact('roles'));
+        
+        return view('employee.create', compact('roles'));
     }
 
     /**
@@ -68,10 +58,11 @@ class PegawaiController extends Controller
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find($request->job));
         
-        $idUser = DB::table('users')
-            ->where('email', $user.'@dummy.com')->first()->id;
-
-        Pegawai::create([
+        // $idUser = DB::table('users')
+        //     ->where('email', $user.'@dummy.com')->first()->id;
+        $idUser = User::where('email', $user.'@dummy.com')->first()->id;
+        
+        Employee::create([
             'name' => $request->name,
             'address' => $request->address,
             'phone' => $request->phone,
@@ -80,25 +71,24 @@ class PegawaiController extends Controller
 
         return redirect()->route('pegawai.index')
             ->with('success', 'Pegawai updated successfully');
-        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(Pegawai $pegawai)
+    public function show(Employee $pegawai)
     {
         $id = User::find($pegawai->id);
-        $name = $id->pegawai->first()->name;
-        $address = $id->pegawai->first()->address;
-        $phone = $id->pegawai->first()->phone;
+        $name = $id->employees->first()->name;
+        $address = $id->employees->first()->address;
+        $phone = $id->employees->first()->phone;
         $role = $id->roles->first()->name;
         $email = $id->email;
         
-        return view('pegawai.show', compact(
+        return view('employee.show', compact(
             'id', 
             'name', 
             'address', 
@@ -111,20 +101,20 @@ class PegawaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pegawai $pegawai)
+    public function edit(Employee $pegawai)
     {
         $id = User::find($pegawai->id);
-        $name = $id->pegawai->first()->name;
-        $address = $id->pegawai->first()->address;
-        $phone = $id->pegawai->first()->phone;
+        $name = $id->employees->first()->name;
+        $address = $id->employees->first()->address;
+        $phone = $id->employees->first()->phone;
         $role = $id->roles->first()->id;
         $roles = Role::all();
         $email = $id->email;
 
-        return view('pegawai.edit', compact(
+        return view('employee.edit', compact(
             'id', 
             'name', 
             'address', 
@@ -139,10 +129,10 @@ class PegawaiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pegawai $pegawai)
+    public function update(Request $request, Employee $pegawai)
     {
         $request->validate([
             'name' => 'required',
@@ -152,8 +142,7 @@ class PegawaiController extends Controller
         ]);
 
         $id = $pegawai->id;
-
-        $infoPegawai = User::find($id)->pegawai()->first();
+        $infoPegawai = User::find($id)->employees()->first();
         $infoPegawai->name = $request->name;
         $infoPegawai->address = $request->address;
         $infoPegawai->phone = $request->phone;
@@ -180,18 +169,18 @@ class PegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pegawai $pegawai)
-    {   
+    public function destroy(Employee $pegawai)
+    {
         $idUser = $pegawai->id;
-        $idPegawai = DB::table('pegawai_user')
+        $idEmployee = DB::table('employee_user')
             ->where('user_id', $idUser)
-            ->first()->pegawai_id;
+            ->first()->employee_id;
 
-        Pegawai::find($idPegawai)->delete();
-        User::find($idUser)->pegawai()->detach();
+        Employee::find($idEmployee)->delete();
+        User::find($idUser)->employees()->detach();
         User::find($idUser)->roles()->detach();
         User::find($idUser)->delete();
 

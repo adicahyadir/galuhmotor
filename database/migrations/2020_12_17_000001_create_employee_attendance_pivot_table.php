@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttendancesTable extends Migration
+class CreateEmployeeAttendancePivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateAttendancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('in')->nullable();
-            $table->dateTime('out')->nullable();
-            $table->timestamps();
+        Schema::create('employee_attendance', function (Blueprint $table) {
+            $table->integer('employee_id');
+            $table->integer('attendance_id');
+            $table->primary(['employee_id', 'attendance_id']);
         });
     }
 
@@ -28,6 +27,6 @@ class CreateAttendancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('employee_attendance');
     }
 }

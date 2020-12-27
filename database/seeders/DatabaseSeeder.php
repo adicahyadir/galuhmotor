@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use App\Models\Pegawai;
 use App\Models\Role;
 use App\Models\Suplayer;
@@ -33,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(1));
-        Pegawai::create([
+        Employee::create([
             'name' => 'Admin Dummy',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
@@ -45,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'kasir@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(2));
-        Pegawai::create([
+        Employee::create([
             'name' => 'Kasir Dummy',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
@@ -57,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'pegawai@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(3));
-        Pegawai::create([
+        Employee::create([
             'name' => 'Pegawai Dummy',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,

@@ -23,10 +23,9 @@ class AttendanceController extends Controller
     public function index()
     {
         $role = User::find(Auth::user()->id)->roles->first()->name;
-        $pegawai = User::find(Auth::user()->id)->pegawai->first();
+        $pegawai = User::find(Auth::user()->id)->employees->first();
         $absen = DB::table('attendances')
             ->where([
-                ['pegawai_id', $pegawai->id],
                 ['created_at', 'like', date('Y-m-d').'%']
             ])->first(['in','out']);
 
@@ -37,11 +36,10 @@ class AttendanceController extends Controller
                 $absensi = Attendance::latest()->paginate(9);
             }
         } else {
-            if (Attendance::first('pegawai_id', $pegawai->id) == null) {
+            if (Attendance::first('created_at', date('Y-m-d').'%') == null) {
                 $absensi = null;
             } else{
-                $absensi = Attendance::latest('pegawai_id', $pegawai->id)
-                    ->paginate(9);
+                $absensi = Attendance::latest('created_at', date('Y-m-d').'%')->paginate(9);
             }
         }
         // $infoPegawai = Pegawai::where('id',Attach::)
@@ -67,19 +65,27 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $pegawai = User::find(Auth::user()->id)->pegawai->first()->id;
-        if($request->absensi == "datang") {
-            Attendance::create([
-                'in' => date('Y-m-d H:i:s'),
-                'pegawai_id' => $pegawai,
-            ]);
-        } else {
-            Attendance::where([
-                    ['in', 'like', date('Y-m-d').'%'],
-                    ['pegawai_id', $pegawai]
-                ])
-                ->update(['out' => date('Y-m-d H:i:s')]);
+        $pegawai = User::find(Auth::user()->id)->employees->first()->id;
+        switch ($request->absensi) {
+            case 'datang':
+                Attendance::create([
+                    'in' => date('Y-m-d H:i:s'),
+                ])->employees()->attach($pegawai);
+                break;
+            
+            default:
+                dd(Attendance::find('in', date('Y-m-d'))->out);
+                # code...
+                break;
         }
+        // if($request->absensi == "datang") {
+            
+        // } else {
+        //     Attendance::where([
+        //             ['in', 'like', date('Y-m-d').'%'],
+        //         ])
+        //         ->update(['out' => date('Y-m-d H:i:s')]);
+        // }
 
         return redirect()->route('absensi.index')
             ->with('success', 'Pegawai updated successfully');

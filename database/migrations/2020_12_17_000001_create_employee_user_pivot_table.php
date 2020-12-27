@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePegawaisTable extends Migration
+class CreateEmployeeUserPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePegawaisTable extends Migration
      */
     public function up()
     {
-        Schema::create('pegawais', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->char('name', 100);
-            $table->string('address');
-            $table->char('phone', 15);
-            $table->string('photo');
+        Schema::create('employee_user', function (Blueprint $table) {
+            $table->integer('employee_id');
+            $table->integer('user_id');
+            $table->primary(['employee_id', 'user_id']);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePegawaisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pegawais');
+        Schema::dropIfExists('employee_user');
     }
 }
