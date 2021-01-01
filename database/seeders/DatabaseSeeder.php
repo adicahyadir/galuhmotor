@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(3));
         Employee::create([
-            'name' => 'Pegawai Dummy',
+            'name' => 'Pegawai Dummy 1',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
             'photo' => 'default.png',
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(3));
         Employee::create([
-            'name' => 'Pegawai Dummy',
+            'name' => 'Pegawai Dummy 2',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
             'photo' => 'default.png',
