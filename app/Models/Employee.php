@@ -21,8 +21,8 @@ class Employee extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function attendances()
-    {
-        return $this->belongsToMany(Attendance::class);
-    }
+    // public function attendances()
+    // {
+    //     return $this->belongsToMany(Attendance::class);
+    // }
 }

@@ -6,9 +6,11 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SuplayerController;
 use App\Http\Controllers\SupplierController;
 use App\Models\Employee;
+use App\Models\Report;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 
@@ -65,25 +67,9 @@ Route::group(['middleware' => ['auth']], function () {
     /** 
      * Route Laporan
      **/
-    Route::get('/laporan/absensi', 
-        [LaporanController::class, 'absensi'])
-    ->name('lapabsensi');
-
-    Route::get('/laporan/barang', 
-        [LaporanController::class, 'barang'])
-    ->name('lapbarang');
-    
-    Route::get('/laporan/keuangan', 
-        [LaporanController::class, 'keuangan'])
-    ->name('lapkeuangan');
-
-    Route::get('/laporan/penggajian', 
-        [LaporanController::class, 'penggajian'])
-    ->name('lappenggajian')
-    ;
-    Route::get('/laporan/transaksi', 
-        [LaporanController::class, 'transaksi'])
-    ->name('laptransaksi');
+    Route::get('laporan/absensi', 
+        [ReportController::class, 'absensi']
+    )->name('laporan.absensi');
 });
 
 require __DIR__.'/auth.php';

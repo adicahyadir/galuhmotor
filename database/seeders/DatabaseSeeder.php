@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
 
         // Pegawai
         User::create([
-            'email' => 'pegawai@dummy.com',
+            'email' => 'pegawai_1@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(3));
         Employee::create([
@@ -64,6 +64,17 @@ class DatabaseSeeder extends Seeder
             'phone' => $faker->e164PhoneNumber,
             'photo' => 'default.png',
         ])->users()->attach(User::find(3));
+
+        User::create([
+            'email' => 'pegawai_2@dummy.com',
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find(3));
+        Employee::create([
+            'name' => 'Pegawai Dummy',
+            'address' => $faker->streetAddress,
+            'phone' => $faker->e164PhoneNumber,
+            'photo' => 'default.png',
+        ])->users()->attach(User::find(4));
 
         foreach (range(1,50) as $index) {
             Supplier::create([

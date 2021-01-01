@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,29 +23,35 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $role = User::find(Auth::user()->id)->roles->first()->name;
-        $pegawai = User::find(Auth::user()->id)->employees->first();
-        $absen = DB::table('attendances')
-            ->where([
-                ['created_at', 'like', date('Y-m-d').'%']
+        $idUser = Auth::user()->id;
+        
+        $roleUser = User::find($idUser)->roles->first()->name;
+
+        $pegawai = User::find($idUser)->employees->first();
+
+        $absen = Attendance::where([
+                ['created_at', 'like', date('Y-m-d').'%'],
+                ['employees_id', $pegawai->id],
             ])->first(['in','out']);
 
-        if ($role == "admin") {
-            if (Attendance::all() == null) {
-                $absensi = null;
-            } else{
-                $absensi = Attendance::latest()->paginate(9);
+        if ($roleUser == "admin") {
+            if (Attendance::all()) {
+                $absensi = DB::table('attendances')
+                    ->join('employees', 'attendances.employees_id', '=', 'employees.id')
+                    ->select('attendances.*', 'employees.*')
+                    ->get();
             }
         } else {
             if (Attendance::first('created_at', date('Y-m-d').'%') == null) {
                 $absensi = null;
             } else{
-                $absensi = Attendance::latest('created_at', date('Y-m-d').'%')->paginate(9);
+                $absensi = Attendance::where([
+                    ['employees_id', $pegawai->id],
+                ])->get();
             }
         }
-        // $infoPegawai = Pegawai::where('id',Attach::)
 
-        return view('attendance.index', compact('role', 'pegawai', 'absen', 'absensi'));
+        return view('attendance.index', compact('roleUser', 'pegawai', 'absen', 'absensi'));
     }
 
     /**
@@ -70,22 +77,19 @@ class AttendanceController extends Controller
             case 'datang':
                 Attendance::create([
                     'in' => date('Y-m-d H:i:s'),
-                ])->employees()->attach($pegawai);
+                    'employees_id' => $pegawai,
+                ]);
                 break;
             
             default:
-                dd(Attendance::find('in', date('Y-m-d'))->out);
-                # code...
+                $absen = Attendance::where([
+                    ['in', 'like' ,date('Y-m-d').'%'],
+                    ['employees_id', $pegawai],
+                ])->first();
+                $absen->out = date('Y-m-d H:i:s');
+                $absen->save();
                 break;
         }
-        // if($request->absensi == "datang") {
-            
-        // } else {
-        //     Attendance::where([
-        //             ['in', 'like', date('Y-m-d').'%'],
-        //         ])
-        //         ->update(['out' => date('Y-m-d H:i:s')]);
-        // }
 
         return redirect()->route('absensi.index')
             ->with('success', 'Pegawai updated successfully');

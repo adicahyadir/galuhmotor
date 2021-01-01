@@ -12,10 +12,11 @@ class Attendance extends Model
     protected $fillable = [
         'in',
         'out',
+        'employees_id',
     ];
 
-    public function employees()
-    {
-        return $this->belongsToMany(Employee::class);
-    }
+    // public function employees()
+    // {
+    //     return $this->belongsToMany(Employee::class);
+    // }
 }

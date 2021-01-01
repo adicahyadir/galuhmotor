@@ -10,7 +10,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // $role = User::find(Auth::user()->id)->roles->first()->name;
-        return view('dashboard');
+        $idUser = Auth::user()->id;
+        
+        $roleUser = User::find(Auth::user()->id)->roles->first()->name;
+
+        return view('dashboard', compact('roleUser'));
     }
 }

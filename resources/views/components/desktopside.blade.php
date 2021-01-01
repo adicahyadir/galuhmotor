@@ -1,4 +1,3 @@
-
 <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#"> {{ config('app.name') }} </a>
 <ul class="mt-6">
     <li class="relative px-6 py-3">
@@ -79,19 +78,16 @@
         <template x-if="isLaporanMenuOpen">
             <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu" >
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
-                    <a class="w-full" href="{{ route('lapabsensi') }}">{{ __('Laporan Absensi') }}</a>
+                    <a class="w-full" href="{{ route('laporan.absensi') }}">{{ __('Laporan Absensi') }}</a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'barang' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
-                    <a class="w-full" href="{{ route('lapbarang') }}">{{ __('Laporan Barang') }}</a>
+                    <a class="w-full" href="#">{{ __('Laporan Barang') }}</a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'keuangan' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
-                    <a class="w-full" href="{{ route('lapkeuangan') }}">{{ __('Laporan Keuangan') }}</a>
-                </li>
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'penggajian' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
-                    <a class="w-full" href="{{ route('lappenggajian') }}">{{ __('Laporan Penggajian') }}</a>
+                    <a class="w-full" href="#">{{ __('Laporan Keuangan') }}</a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'transaksi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
-                    <a class="w-full" href="{{ route('laptransaksi') }}">{{ __('Laporan Transaksi') }}</a>
+                    <a class="w-full" href="#">{{ __('Laporan Transaksi') }}</a>
                 </li>
             </ul>
         </template>

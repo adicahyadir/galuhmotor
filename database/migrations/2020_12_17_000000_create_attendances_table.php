@@ -17,6 +17,7 @@ class CreateAttendancesTable extends Migration
             $table->id()->autoIncrement();
             $table->dateTime('in')->nullable();
             $table->dateTime('out')->nullable();
+            $table->foreignId('employees_id')->constrained();
             $table->timestamps();
         });
     }
