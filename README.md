@@ -43,6 +43,16 @@ Kasir
 email: kasir@dummy.com
 password: 123456 
 ```
+```sh
+Pegawai 1
+email: pegawai_1@dummy.com
+password: 123456 
+```
+```sh
+Pegawai 2
+email: pegawai_2@dummy.com
+password: 123456 
+```
 
 ## 🔮 Future
 
