@@ -48,7 +48,6 @@ password: 123456
 
 TODO
 
-- [ ] Absensi
 - [ ] Kelola Barang
 - [ ] Kelola Keuangan
 - [ ] Kelola Suplayer
