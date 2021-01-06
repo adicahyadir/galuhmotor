@@ -2,14 +2,18 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SuplayerController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Employee;
+use App\Models\Finance;
 use App\Models\Report;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
@@ -33,9 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('absensi', AttendanceController::class);
 
-    Route::get('/barang', function () {
-        return view('barang.index');
-    })->name('barang');
+    Route::resource('barang', ItemController::class);
 
 
     /** 
@@ -45,31 +47,33 @@ Route::group(['middleware' => ['auth']], function () {
         [KasirController::class, 'index'])
     ->name('kasir');
 
-    Route::get('/keuangan', function () {
-        return view('keuangan.index');
-    })->name('keuangan');
+    Route::resource('keuangan', FinanceController::class);
 
     /** 
      * Route Pegawai
      **/
-    Route::resource('pegawai', EmployeeController::class);
-    // Route::get('/pegawai', 
-    //     [PegawaiController::class, 'index'])
-    // ->name('pegawai');
+    Route::resource('pegawai', UserController::class);
+    
+    Route::resource('supplier', SupplierController::class);
 
-    /** 
-     * Route Suplayer
-     **/
-    Route::get('/suplayer', 
-        [SupplierController::class, 'index'])
-    ->name('supplier');
 
     /** 
      * Route Laporan
      **/
     Route::get('laporan/absensi', 
-        [ReportController::class, 'absensi']
+        [AttendanceController::class, 'report']
     )->name('laporan.absensi');
+    Route::get('laporan/barang', 
+        [ItemController::class, 'report']
+    )->name('laporan.barang');
+    Route::get('laporan/keuangan', 
+        [FinanceController::class, 'report']
+    )->name('laporan.keuangan');
+    Route::get('laporan/transaksi', 
+        [TransactionController::class, 'report']
+    )->name('laporan.transaksi');
+
+    Route::resource('laporan', ReportController::class);
 });
 
 require __DIR__.'/auth.php';

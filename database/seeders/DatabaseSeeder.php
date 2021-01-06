@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Categories;
+use App\Models\Category;
 use App\Models\Employee;
+use App\Models\Merk;
+use App\Models\Merks;
 use App\Models\Pegawai;
 use App\Models\Role;
 use App\Models\Suplayer;
@@ -31,50 +35,42 @@ class DatabaseSeeder extends Seeder
         
         // Admin
         User::create([
-            'email' => 'admin@dummy.com',
-            'password' => Hash::make(123456)
-        ])->roles()->attach(Role::find(1));
-        Employee::create([
             'name' => 'Admin Dummy',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
             'photo' => 'default.png',
-        ])->users()->attach(User::find(1));
+            'email' => 'admin@dummy.com',
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find(1));
 
         // Kasir
         User::create([
-            'email' => 'kasir@dummy.com',
-            'password' => Hash::make(123456)
-        ])->roles()->attach(Role::find(2));
-        Employee::create([
             'name' => 'Kasir Dummy',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
             'photo' => 'default.png',
-        ])->users()->attach(User::find(2));
+            'email' => 'kasir@dummy.com',
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find(2));
 
         // Pegawai
         User::create([
-            'email' => 'pegawai_1@dummy.com',
-            'password' => Hash::make(123456)
-        ])->roles()->attach(Role::find(3));
-        Employee::create([
             'name' => 'Pegawai Dummy 1',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
             'photo' => 'default.png',
-        ])->users()->attach(User::find(3));
-
-        User::create([
-            'email' => 'pegawai_2@dummy.com',
+            'email' => 'pegawai_1@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(3));
-        Employee::create([
+
+        User::create([
             'name' => 'Pegawai Dummy 2',
             'address' => $faker->streetAddress,
             'phone' => $faker->e164PhoneNumber,
             'photo' => 'default.png',
-        ])->users()->attach(User::find(4));
+            'email' => 'pegawai_2@dummy.com',
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find(3));
 
         foreach (range(1,50) as $index) {
             Supplier::create([
@@ -83,6 +79,19 @@ class DatabaseSeeder extends Seeder
                 'descriptions' => $faker->text($maxNbChars = 50),
             ]);
         };
+
+        Categories::create([
+            'name' => 'Aksesoris'
+        ]);
+        Categories::create([
+            'name' => 'Spare Part'
+        ]);
+        Merk::create([
+            'name' => 'DBS'
+        ]);
+        Merk::create([
+            'name' => 'YSS'
+        ]);
         
     }
 }

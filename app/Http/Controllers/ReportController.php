@@ -3,21 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Employee;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
+
+    public function __construct()
+    {
+        # code...
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        switch ($request->action) {
+            case "attendance":
+                $roleName = "admin";
+
+                $resultUser = User::whereHas('roles', function($query) use ($roleName) {
+                    $query->where('name', '!=' ,$roleName);
+                })->get();
+
+                $resultAttendance = Attendance::all();
+
+                // return view('employee.report', compact('resultUser', 'resultAttendance'));
+                $pdf = PDF::loadView('employee.report', compact('resultUser', 'resultAttendance'));
+                return $pdf->download('-laporan_absensi.pdf');
+                break;
+            
+            case "finance":
+                // code
+                break;
+            
+            case "item":
+                // code
+                break;
+
+            case "transaction":
+                // code
+                break;
+                        
+            default:
+                return redirect()->route('dashboard');
+                break;
+        }
     }
 
     /**
@@ -84,23 +121,5 @@ class ReportController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function absensi()
-    {
-        $idUser = Auth::user()->id;
-        
-        $roleUser = User::find($idUser)->roles->first()->name;
-
-        $pegawai = User::find($idUser)->employees->first();
-        
-        if (Attendance::all()) {
-            $absensi = DB::table('attendances')
-                ->join('employees', 'attendances.employees_id', '=', 'employees.id')
-                ->select('attendances.*', 'employees.*')
-                ->get();
-        }
-        
-        return view('reports.attendance', compact('absensi', 'roleUser'));
     }
 }

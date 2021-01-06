@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class EmployeeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +18,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $datas = User::first()->paginate(9);
+        $result = User::first()->paginate(9);
 
-        return view('employee.index', compact('datas'));
+        return view('employee.index', compact('result'));
     }
 
     /**
@@ -54,20 +53,13 @@ class EmployeeController extends Controller
         $user = Str::lower(preg_replace('/[^A-Za-z0-9]/', '', $request->name));
 
         User::create([
-            'email' => $user.'@dummy.com',
-            'password' => Hash::make(123456)
-        ])->roles()->attach(Role::find($request->job));
-        
-        // $idUser = DB::table('users')
-        //     ->where('email', $user.'@dummy.com')->first()->id;
-        $idUser = User::where('email', $user.'@dummy.com')->first()->id;
-        
-        Employee::create([
             'name' => $request->name,
             'address' => $request->address,
             'phone' => $request->phone,
             'photo' => 'default.png',
-        ])->users()->attach(User::find($idUser));
+            'email' => $user.'@dummy.com',
+            'password' => Hash::make(123456)
+        ])->roles()->attach(Role::find($request->job));
 
         return redirect()->route('pegawai.index')
             ->with('success', 'Pegawai updated successfully');
@@ -76,63 +68,39 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Employee $pegawai)
+    public function show(User $pegawai)
     {
-        $id = User::find($pegawai->id);
-        $name = $id->employees->first()->name;
-        $address = $id->employees->first()->address;
-        $phone = $id->employees->first()->phone;
-        $role = $id->roles->first()->name;
-        $email = $id->email;
+        $infoUser = User::find($pegawai->id);
         
-        return view('employee.show', compact(
-            'id', 
-            'name', 
-            'address', 
-            'phone', 
-            'role', 
-            'email'
-        ));
+        return view('employee.show', compact('infoUser'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $pegawai)
+    public function edit(User $pegawai)
     {
-        $id = User::find($pegawai->id);
-        $name = $id->employees->first()->name;
-        $address = $id->employees->first()->address;
-        $phone = $id->employees->first()->phone;
-        $role = $id->roles->first()->id;
-        $roles = Role::all();
-        $email = $id->email;
+        $infoUser = User::find($pegawai->id);
 
-        return view('employee.edit', compact(
-            'id', 
-            'name', 
-            'address', 
-            'phone', 
-            'role', 
-            'roles',
-            'email'
-        ));
+        $roles = Role::all();
+
+        return view('employee.edit', compact('infoUser', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $pegawai)
+    public function update(Request $request, User $pegawai)
     {
         $request->validate([
             'name' => 'required',
@@ -142,18 +110,18 @@ class EmployeeController extends Controller
         ]);
 
         $id = $pegawai->id;
-        $infoPegawai = User::find($id)->employees()->first();
-        $infoPegawai->name = $request->name;
-        $infoPegawai->address = $request->address;
-        $infoPegawai->phone = $request->phone;
-        $infoPegawai->save();
+        $infoUser = User::find($pegawai->id);
+        $infoUser->name = $request->name;
+        $infoUser->address = $request->address;
+        $infoUser->phone = $request->phone;
+        $infoUser->save();
 
         $newRole = $request->job;
-        $currentRole = User::find($id)->roles->first()->id;
+        $currentRole = User::find($pegawai->id)->roles->first()->id;
 
         if ($currentRole != $newRole) {
-            User::find($id)->roles()->detach();
-            User::find($id)->roles()->attach($newRole);
+            User::find($pegawai->id)->roles()->detach();
+            User::find($pegawai->id)->roles()->attach($newRole);
         }
 
         if ($request->password) {
@@ -169,20 +137,14 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $pegawai)
+    public function destroy(User $pegawai)
     {
-        $idUser = $pegawai->id;
-        $idEmployee = DB::table('employee_user')
-            ->where('user_id', $idUser)
-            ->first()->employee_id;
+        User::find($pegawai->id)->roles()->detach();
 
-        Employee::find($idEmployee)->delete();
-        User::find($idUser)->employees()->detach();
-        User::find($idUser)->roles()->detach();
-        User::find($idUser)->delete();
+        User::find($pegawai->id)->delete();
 
         return redirect()->route('pegawai.index')
             ->with('success', 'Pegawai deleted successfully');

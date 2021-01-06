@@ -17,6 +17,11 @@ class Supplier extends Model
         'descriptions'
     ];
 
+    public function items()
+    {
+        return $this->belongsToMany(Item::class);
+    }
+
     public function deleteById($data)
     {
         $supplier = Supplier::find($data);

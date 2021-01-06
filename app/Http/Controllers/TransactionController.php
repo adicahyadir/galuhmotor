@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barang;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
-class BarangController extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Barang  $barang
+     * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function show(Barang $barang)
+    public function show(Transaction $transaction)
     {
         //
     }
@@ -52,10 +52,10 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Barang  $barang
+     * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Barang $barang)
+    public function edit(Transaction $transaction)
     {
         //
     }
@@ -64,10 +64,10 @@ class BarangController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Barang  $barang
+     * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Barang $barang)
+    public function update(Request $request, Transaction $transaction)
     {
         //
     }
@@ -75,11 +75,16 @@ class BarangController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Barang  $barang
+     * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Barang $barang)
+    public function destroy(Transaction $transaction)
     {
         //
+    }
+
+    public function report()
+    {
+        return view('report.transaction');
     }
 }

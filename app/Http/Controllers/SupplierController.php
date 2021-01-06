@@ -52,7 +52,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('supplier.create');
     }
 
     /**
@@ -63,7 +63,20 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'descriptions' => 'required',
+        ]);
+
+        Supplier::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'descriptions' => $request->descriptions,
+        ]);
+
+        return redirect()->route('supplier.index')
+            ->with('success', 'Pegawai updated successfully');
     }
 
     /**
@@ -74,7 +87,9 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        $data = Supplier::find($supplier->id);
+        
+        return view('supplier.show', compact('data'));
     }
 
     /**
@@ -85,7 +100,9 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        $data = Supplier::find($supplier->id);
+
+        return view('supplier.edit', compact('data'));
     }
 
     /**
@@ -97,7 +114,14 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        $newData = Supplier::find($supplier->id);
+        $newData->name = $request->name;
+        $newData->phone = $request->phone;
+        $newData->descriptions = $request->descriptions;
+        $newData->save();
+
+        return redirect()->route('supplier.index')
+            ->with('success', 'Pegawai updated successfully');
     }
 
     /**
@@ -108,6 +132,9 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        Supplier::find($supplier->id)->delete();
+
+        return redirect()->route('supplier.index')
+            ->with('success', 'Pegawai deleted successfully');
     }
 }

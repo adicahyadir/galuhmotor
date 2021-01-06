@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeUserPivotTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateEmployeeUserPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_user', function (Blueprint $table) {
-            $table->integer('employee_id');
-            $table->integer('user_id');
-            $table->primary(['employee_id', 'user_id']);
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateEmployeeUserPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_user');
+        Schema::dropIfExists('categories');
     }
 }
