@@ -58,9 +58,7 @@ password: 123456
 
 TODO
 
-- [ ] Kelola Barang
 - [ ] Kelola Keuangan
-- [ ] Kelola Suplayer
 - [ ] Laporan
 
 ## Author
