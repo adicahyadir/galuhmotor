@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -13,7 +17,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('profile.index');
+        $data = User::find(Auth::user()->id);
+
+        $roles = Role::all();
+
+        return view('profile.index', compact('data', 'roles'));
     }
 
     /**
@@ -68,7 +76,30 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (Auth::user()->id == $id) {
+            $request->validate([
+                'name' => 'required',
+                'address' => 'required',
+                'phone' => 'required',
+            ]);
+
+            $infoUser = User::find($id);
+            $infoUser->name = $request->name;
+            $infoUser->address = $request->address;
+            $infoUser->phone = $request->phone;
+            $infoUser->save();
+    
+            if ($request->password) {
+                User::find($id)->update([
+                    'password' => Hash::make($request->password)
+                ]);
+            }
+
+            return redirect()->route('profil.index')
+                ->with('success', 'Pegawai updated successfully');
+        } else {
+            return abort(404);
+        }
     }
 
     /**
