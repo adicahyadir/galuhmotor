@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Data Profil') }}
         </h2>
     </x-slot>
 
-    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"> Dashboard </h2>
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"> Data Profil </h2>
     <!-- Cards -->
-    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+    {{-- <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         <!-- Card -->
         <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
             <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
@@ -56,9 +56,9 @@
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"> 35 </p>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- New Table -->
-    <h5 class="mb-4 text-2sm font-semibold text-gray-700 dark:text-gray-200"> Table absensi hari ini </h5>
+    {{-- <h5 class="mb-4 text-2sm font-semibold text-gray-700 dark:text-gray-200"> Table absensi hari ini </h5>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
@@ -300,5 +300,5 @@
                 </nav>
             </span>
         </div>
-    </div>
+    </div> --}}
 </x-app-layout>

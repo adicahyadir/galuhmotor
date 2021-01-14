@@ -5,12 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $role = Auth::user()->roles->first()->name;
+            if ($role == "admin") {
+                return $next($request);
+            } else {
+                return abort(404);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,10 +62,10 @@ class UserController extends Controller
             'job' => 'required'
         ]);
 
-        $user = Str::lower(preg_replace('/[^A-Za-z0-9]/', '', $request->name));
-
+        $user = Str::lower(preg_replace('/[^A-Za-z0-9]/', '', strtolower($request->name)));
+        
         User::create([
-            'name' => $request->name,
+            'name' => ucfirst($request->name),
             'address' => $request->address,
             'phone' => $request->phone,
             'photo' => 'default.png',

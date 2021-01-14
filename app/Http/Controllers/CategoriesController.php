@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\Supplier;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SupplierController extends Controller
+class CategoriesController extends Controller
 {
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             $role = Auth::user()->roles->first()->name;
-            if ($role == "admin") {
+            if ($role == "admin" || $role == "pegawai") {
                 return $next($request);
             } else {
                 return abort(404);
@@ -27,9 +26,9 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::latest()->paginate(9);
-        
-        return view('supplier.index', compact('supplier'));
+        $result = Categories::first()->paginate(9);
+
+        return view('categories.index', compact('result'));
     }
 
     /**
@@ -39,7 +38,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('supplier.create');
+        return view('categories.create');
     }
 
     /**
@@ -52,76 +51,77 @@ class SupplierController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => 'required',
-            'descriptions' => 'required',
         ]);
 
-        Supplier::create([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'descriptions' => $request->descriptions,
+        Categories::create([
+            'name' => strtolower($request->name),
         ]);
 
-        return redirect()->route('supplier.index')
+        return redirect()->route('kategori.index')
             ->with('success', 'Pegawai updated successfully');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(Categories $kategori)
     {
-        $data = Supplier::find($supplier->id);
+        $data = Categories::find($kategori->id);
         
-        return view('supplier.show', compact('data'));
+        return view('categories.show', compact('data'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit(Categories $kategori)
     {
-        $data = Supplier::find($supplier->id);
+        $data = Categories::find($kategori->id);
 
-        return view('supplier.edit', compact('data'));
+        return view('categories.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Supplier  $supplier
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, Categories $kategori)
     {
-        $newData = Supplier::find($supplier->id);
-        $newData->name = $request->name;
-        $newData->phone = $request->phone;
-        $newData->descriptions = $request->descriptions;
-        $newData->save();
+        $request->validate([
+            'name' => 'required'
+        ]);
 
-        return redirect()->route('supplier.index')
+        $data = Categories::find($kategori->id);
+
+        if ($data->name != $request->name) {
+            $data->name = strtolower($request->name);
+            $data->save();
+        }
+
+        return redirect()->route('kategori.index')
             ->with('success', 'Pegawai updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(Categories $kategori)
     {
-        Supplier::find($supplier->id)->delete();
+        Categories::find($kategori->id)->delete();
 
-        return redirect()->route('supplier.index')
+        return redirect()->route('kategori.index')
             ->with('success', 'Pegawai deleted successfully');
     }
 }

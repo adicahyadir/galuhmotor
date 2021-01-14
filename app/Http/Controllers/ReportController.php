@@ -7,14 +7,21 @@ use App\Models\Employee;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-
     public function __construct()
     {
-        # code...
+        $this->middleware(function ($request, $next) {
+            $role = Auth::user()->roles->first()->name;
+            if ($role == "admin") {
+                return $next($request);
+            } else {
+                return abort(404);
+            }
+        });
     }
 
     /**

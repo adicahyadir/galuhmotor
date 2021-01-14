@@ -8,9 +8,21 @@ use App\Models\Item;
 use App\Models\Merk;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $role = Auth::user()->roles->first()->name;
+            if ($role == "admin" || $role == "pegawai") {
+                return $next($request);
+            } else {
+                return abort(404);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *

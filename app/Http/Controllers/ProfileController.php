@@ -2,37 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kasir;
-use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class KasirController extends Controller
+class ProfileController extends Controller
 {
-        /**
-     * All of the current user's projects.
-     */
-    protected $role_id;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $this->role_id = Auth::user()->role_id;
-            $this->user = auth()->user();
-            $mrole = new Role;
-            $data = $mrole->getRoleById($this->role_id);
-            if ($data != "kasir") {
-                return redirect('dashboard');
-            } else {
-                return $next($request);
-            }
-        });
-    }
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +13,7 @@ class KasirController extends Controller
      */
     public function index()
     {
-        return view('kasir.index');
+        return view('profile.index');
     }
 
     /**
@@ -67,10 +40,10 @@ class KasirController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kasir  $kasir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Kasir $kasir)
+    public function show($id)
     {
         //
     }
@@ -78,10 +51,10 @@ class KasirController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kasir  $kasir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kasir $kasir)
+    public function edit($id)
     {
         //
     }
@@ -90,10 +63,10 @@ class KasirController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kasir  $kasir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kasir $kasir)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -101,10 +74,10 @@ class KasirController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kasir  $kasir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kasir $kasir)
+    public function destroy($id)
     {
         //
     }

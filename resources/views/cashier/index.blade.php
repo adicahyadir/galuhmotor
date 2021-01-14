@@ -1,4 +1,3 @@
-
 @extends('layouts.kasir')
 @section('content')
     <x-slot name="header">

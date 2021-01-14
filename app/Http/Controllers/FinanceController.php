@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Finance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FinanceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $role = Auth::user()->roles->first()->name;
+            if ($role == "admin") {
+                return $next($request);
+            } else {
+                return abort(404);
+            }
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *

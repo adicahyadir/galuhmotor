@@ -98,6 +98,8 @@
                         
                         {{ $slot }}
 
+                      	{{-- @yield('content') --}}
+
                     </div>
                 </main>
             </div>

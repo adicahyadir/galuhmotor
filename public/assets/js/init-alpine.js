@@ -47,17 +47,17 @@ function data() {
     togglePagesMenu() {
       this.isPagesMenuOpen = !this.isPagesMenuOpen
     },
-    isDanaMenuOpen: false,
-    toggleDanaMenu() {
-      this.isDanaMenuOpen = !this.isDanaMenuOpen
-    },
-    isPegawaiMenuOpen: false,
-    togglePegawaiMenu() {
-      this.isPegawaiMenuOpen = !this.isPegawaiMenuOpen
-    },
     isLaporanMenuOpen: false,
     toggleLaporanMenu() {
       this.isLaporanMenuOpen = !this.isLaporanMenuOpen
+    },
+    isItemMenuOpen: false,
+    toggleItemMenu() {
+      this.isItemMenuOpen = !this.isItemMenuOpen
+    },
+    isEmployeeMenuOpen: false,
+    toggleEmployeeMenu() {
+      this.isEmployeeMenuOpen = !this.isEmployeeMenuOpen
     },
     // Modal
     isModalOpen: false,

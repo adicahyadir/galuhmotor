@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TransactionController extends Controller
+class CashierController extends Controller
 {
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             $role = Auth::user()->roles->first()->name;
-            if ($role == "admin") {
+            if ($role == "admin" || $role == "kasir") {
                 return $next($request);
             } else {
                 return abort(404);
@@ -53,10 +52,10 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Transaction $transaction)
+    public function show($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class TransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaction $transaction)
+    public function edit($id)
     {
         //
     }
@@ -76,10 +75,10 @@ class TransactionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -87,16 +86,11 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaction $transaction)
+    public function destroy($id)
     {
         //
-    }
-
-    public function report()
-    {
-        return view('report.transaction');
     }
 }

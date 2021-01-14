@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TransactionController extends Controller
+class RoleController extends Controller
 {
     public function __construct()
     {
@@ -26,7 +26,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $result = Role::first()->paginate(9);
+
+        return view('job.index', compact('result'));
     }
 
     /**
@@ -36,7 +38,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        return view('job.create');
     }
 
     /**
@@ -47,56 +49,79 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        Role::create([
+            'name' => strtolower($request->name),
+        ]);
+
+        return redirect()->route('jabatan.index')
+            ->with('success', 'Pegawai updated successfully');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Transaction $transaction)
+    public function show(Role $jabatan)
     {
-        //
+        $data = Role::find($jabatan->id);
+        
+        return view('job.show', compact('data'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaction $transaction)
+    public function edit(Role $jabatan)
     {
-        //
+        $data = Role::find($jabatan->id);
+
+        return view('job.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, Role $jabatan)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $data = Role::find($jabatan->id);
+
+        if ($data->name != $request->name) {
+            $data->name = strtolower($request->name);
+            $data->save();
+        }
+
+        return redirect()->route('jabatan.index')
+            ->with('success', 'Pegawai updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Transaction  $transaction
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Role $jabatan)
     {
-        //
-    }
+        Role::find($jabatan->id)->delete();
 
-    public function report()
-    {
-        return view('report.transaction');
+        return redirect()->route('jabatan.index')
+            ->with('success', 'Pegawai deleted successfully');
     }
 }
