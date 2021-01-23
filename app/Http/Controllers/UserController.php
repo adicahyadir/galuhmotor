@@ -58,7 +58,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|unique:users|numeric',
             'job' => 'required'
         ]);
 
@@ -117,7 +117,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|numeric',
             'job' => 'required'
         ]);
 
