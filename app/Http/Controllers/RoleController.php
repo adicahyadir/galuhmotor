@@ -50,7 +50,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:roles',
         ]);
 
         Role::create([
@@ -97,7 +97,7 @@ class RoleController extends Controller
     public function update(Request $request, Role $jabatan)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
         ]);
 
         $data = Role::find($jabatan->id);
