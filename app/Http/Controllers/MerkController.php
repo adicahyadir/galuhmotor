@@ -50,7 +50,7 @@ class MerkController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:merks',
         ]);
 
         Merk::create([
