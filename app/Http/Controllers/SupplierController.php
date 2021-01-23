@@ -52,7 +52,7 @@ class SupplierController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|unique:suppliers|numeric',
             'descriptions' => 'required',
         ]);
 
@@ -101,6 +101,12 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required|numeric',
+            'descriptions' => 'required',
+        ]);
+
         $newData = Supplier::find($supplier->id);
         $newData->name = $request->name;
         $newData->phone = $request->phone;
