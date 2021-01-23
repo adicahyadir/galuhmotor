@@ -65,6 +65,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:items',
+            'qty' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
         Item::create([
             'name' => $request->name,
             'qty' => $request->qty,
@@ -125,6 +131,12 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $barang)
     {
+        $request->validate([
+            'name' => 'required',
+            'qty' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
         $newData = Item::find($barang->id);
         $newData->name = $request->name;
         $newData->qty = $request->qty;
