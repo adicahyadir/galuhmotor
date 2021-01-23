@@ -21,8 +21,8 @@
             <span class="ml-4">{{ __('Absensi') }}</span>
         </a>
     </li>
-    @if (Auth::user()->roles()->first()->name == "admin" || Auth::user()->roles()->first()->name == "kasir")
     {{-- Kasir --}}
+    @if (Auth::user()->roles()->first()->name == "admin" || Auth::user()->roles()->first()->name == "kasir")
     <li class="relative px-6 py-3">
         <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg {{request()->segment(1) == 'kasir' ? 'bg-purple-600' : ''}}" aria-hidden="true"></span>
         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(1) == 'kasir' ? 'text-gray-800 dark:text-gray-100' : ''}}" href="{{ route('kasir.index') }}">
@@ -33,10 +33,10 @@
         </a>
     </li>
     @endif
-    @if (Auth::user()->roles()->first()->name == "admin" || Auth::user()->roles()->first()->name == "pegawai")
     {{-- Pengelolaan Barang --}}
+    @if (Auth::user()->roles()->first()->name == "admin" || Auth::user()->roles()->first()->name == "pegawai")
     <li class="relative px-6 py-3">
-        <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg {{request()->segment(1) == 'barang' || request()->segment(1) == 'merk' || request()->segment(1) == 'kategori' ? 'bg-purple-600' : ''}}" aria-hidden="true"></span>
+        <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg {{request()->segment(1) == 'barang' || request()->segment(1) == 'kategori' || request()->segment(1) == 'merek' ? 'bg-purple-600' : ''}}" aria-hidden="true"></span>
         <button class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 " @click="toggleItemMenu" aria-haspopup="true">
             <span class="inline-flex items-center">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -50,21 +50,21 @@
         </button>
         <template x-if="isItemMenuOpen">
             <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu" >
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(1) == 'barang' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
                     <a class="w-full" href="{{ route('barang.index') }}">{{ __('Daftar Barang') }}</a>
                 </li>
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
-                    <a class="w-full" href="{{ route('merek.index') }}">{{ __('Daftar Merek') }}</a>
-                </li>
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(1) == 'kategori' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
                     <a class="w-full" href="{{ route('kategori.index') }}">{{ __('Daftar Kategori') }}</a>
+                </li>
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(1) == 'merek' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                    <a class="w-full" href="{{ route('merek.index') }}">{{ __('Daftar Merek') }}</a>
                 </li>
             </ul>
         </template>
     </li>
     @endif
-    @if (Auth::user()->roles()->first()->name == "admin")
     {{-- Pengelolaan Keuangan--}}
+    @if (Auth::user()->roles()->first()->name == "admin")
     <li class="relative px-6 py-3">
         <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg {{request()->segment(1) == 'keuangan' ? 'bg-purple-600' : ''}}" aria-hidden="true"></span>
         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(1) == 'keuangan' ? 'text-gray-800 dark:text-gray-100' : ''}}" href="{{ route('keuangan.index') }}">
@@ -90,10 +90,10 @@
         </button>
         <template x-if="isEmployeeMenuOpen">
             <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu" >
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(1) == 'jabatan' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
                     <a class="w-full" href="{{ route('jabatan.index') }}">{{ __('Daftar Jabatan') }}</a>
                 </li>
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(1) == 'pegawai' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
                     <a class="w-full" href="{{ route('pegawai.index') }}">{{ __('Daftar Pegawai') }}</a>
                 </li>
             </ul>
@@ -125,16 +125,16 @@
         </button>
         <template x-if="isLaporanMenuOpen">
             <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu" >
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'absensi' ? 'text-gray-800 dark:text-gray-100' : ''}}">
                     <a class="w-full" href="{{ route('laporan.absensi') }}">{{ __('Laporan Absensi') }}</a>
                 </li>
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'barang' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'barang' ? 'text-gray-800 dark:text-gray-100' : ''}}">
                     <a class="w-full" href="{{ route('laporan.barang') }}">{{ __('Laporan Barang') }}</a>
                 </li>
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'keuangan' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'keuangan' ? 'text-gray-800 dark:text-gray-100' : ''}}">
                     <a class="w-full" href="{{ route('laporan.keuangan') }}">{{ __('Laporan Keuangan') }}</a>
                 </li>
-                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'transaksi' ? 'text-gray-800 dark:text-gray-100' : ''}}" >
+                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{request()->segment(2) == 'transaksi' ? 'text-gray-800 dark:text-gray-100' : ''}}">
                     <a class="w-full" href="{{ route('laporan.transaksi') }}">{{ __('Laporan Transaksi') }}</a>
                 </li>
             </ul>
