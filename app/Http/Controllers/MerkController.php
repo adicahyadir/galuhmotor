@@ -57,8 +57,9 @@ class MerkController extends Controller
             'name' => strtolower($request->name),
         ]);
 
-        return redirect()->route('merek.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->success('Merek telah terekam dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('merek.index');
     }
 
     /**
@@ -70,7 +71,7 @@ class MerkController extends Controller
     public function show(Merk $merek)
     {
         $data = Merk::find($merek->id);
-        
+
         return view('merk.show', compact('data'));
     }
 
@@ -107,8 +108,9 @@ class MerkController extends Controller
             $data->save();
         }
 
-        return redirect()->route('merek.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->info('Data telah terubah dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('merek.index');
     }
 
     /**
@@ -121,7 +123,8 @@ class MerkController extends Controller
     {
         Merk::find($merek->id)->delete();
 
-        return redirect()->route('merek.index')
-            ->with('success', 'Pegawai deleted successfully');
+        alert()->success('Data telah terhapus dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('merek.index');
     }
 }

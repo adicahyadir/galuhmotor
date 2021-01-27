@@ -43,7 +43,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        
+
         return view('employee.create', compact('roles'));
     }
 
@@ -63,18 +63,19 @@ class UserController extends Controller
         ]);
 
         $user = Str::lower(preg_replace('/[^A-Za-z0-9]/', '', strtolower($request->name)));
-        
+
         User::create([
             'name' => ucfirst($request->name),
             'address' => $request->address,
             'phone' => $request->phone,
             'photo' => 'default.png',
-            'email' => $user.'@dummy.com',
+            'email' => $user . '@dummy.com',
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find($request->job));
 
-        return redirect()->route('pegawai.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->success('Email: ' . $user . '@dummy.com Password: 123456', 'Berhasil', 'success')->autoclose(25000);
+
+        return redirect()->route('pegawai.index');
     }
 
     /**
@@ -86,7 +87,7 @@ class UserController extends Controller
     public function show(User $pegawai)
     {
         $infoUser = User::find($pegawai->id);
-        
+
         return view('employee.show', compact('infoUser'));
     }
 
@@ -141,9 +142,10 @@ class UserController extends Controller
                 'password' => Hash::make($request->password)
             ]);
         }
-        
-        return redirect()->route('pegawai.index')
-            ->with('success', 'Pegawai updated successfully');
+
+        alert()->info('Data telah terubah dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('pegawai.index');
     }
 
     /**
@@ -158,7 +160,8 @@ class UserController extends Controller
 
         User::find($pegawai->id)->delete();
 
-        return redirect()->route('pegawai.index')
-            ->with('success', 'Pegawai deleted successfully');
+        alert()->success('Data telah terhapus dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('pegawai.index');
     }
 }

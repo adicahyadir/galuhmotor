@@ -14,21 +14,21 @@
         <div class="px-4 py-3 mb-5 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Nama</span>
-                <input id="name" name="name" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="John Doe"/>
+                <input id="name" name="name" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="John Doe" value="{{ old('name') }}"/>
                 @error('name')
                 <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
                 @enderror
             </label>
             <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Alamat</span>
-                <textarea name="address" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" rows="3" placeholder="Jl. Anggur No. 10"></textarea>
+                <textarea name="address" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" rows="3" placeholder="Jl. Anggur No. 10">{{ old('address') }}</textarea>
                 @error('address')
                 <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
                 @enderror
             </label>
             <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">No. Hp</span>
-                <input id="phone" name="phone" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="08XXXXXXXXXX"/>
+                <input id="phone" name="phone" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="08XXXXXXXXXX" value="{{ old('phone') }}"/>
                 @error('phone')
                 <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
                 @enderror
@@ -37,7 +37,7 @@
                 <span class="text-gray-700 dark:text-gray-400"> Jabatan </span>
                 <select name="job" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                     @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
+                        <option value="{{ $role->id }}" {{ (old('job') == $role->id) ? 'selected' : '' }}>{{ ucfirst($role->name) }}</option>
                     @endforeach
                 </select>
             </label>

@@ -28,10 +28,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        
+
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        // alert()->info('Anda telah masuk kedalam sistem .', 'Berhasil', 'success');
 
         return redirect(RouteServiceProvider::HOME);
     }

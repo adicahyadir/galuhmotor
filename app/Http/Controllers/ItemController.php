@@ -53,7 +53,7 @@ class ItemController extends Controller
         $merks = Merk::all();
 
         $suppliers = Supplier::all();
-        
+
         return view('item.create', compact('categories', 'merks', 'suppliers'));
     }
 
@@ -80,8 +80,9 @@ class ItemController extends Controller
             'supplier_id' => $request->supplier,
         ]);
 
-        return redirect()->route('barang.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->success('Barang telah terekam dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -99,7 +100,7 @@ class ItemController extends Controller
         $merks = Merk::all();
 
         $suppliers = Supplier::all();
-        
+
         return view('item.show', compact('data', 'categories', 'merks', 'suppliers'));
     }
 
@@ -146,8 +147,9 @@ class ItemController extends Controller
         $newData->supplier_id = $request->supplier;
         $newData->save();
 
-        return redirect()->route('barang.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->info('Data telah terubah dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -160,8 +162,9 @@ class ItemController extends Controller
     {
         Item::find($barang->id)->delete();
 
-        return redirect()->route('barang.index')
-            ->with('success', 'Pegawai deleted successfully');
+        alert()->success('Data telah terhapus dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('barang.index');
     }
 
     public function report()

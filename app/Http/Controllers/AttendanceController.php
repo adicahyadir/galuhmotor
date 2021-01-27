@@ -18,15 +18,15 @@ class AttendanceController extends Controller
     public function index()
     {
         $idUser = Auth::user()->id;
-        
+
         $roleUser = User::find(Auth::user()->id)->roles->first()->name;
 
         $infoUser = User::find(Auth::user()->id);
 
         $absen = Attendance::where([
-                ['created_at', 'like', date('Y-m-d').'%'],
-                ['users_id', $infoUser->id],
-            ])->first(['in','out']);
+            ['created_at', 'like', date('Y-m-d') . '%'],
+            ['users_id', $infoUser->id],
+        ])->first(['in', 'out']);
 
         if ($roleUser == "admin") {
             $absensi = DB::table('attendances')
@@ -34,9 +34,9 @@ class AttendanceController extends Controller
                 ->select('attendances.*', 'users.name', 'users.phone')
                 ->get();
         } else {
-            if (Attendance::first('created_at', date('Y-m-d').'%') == null) {
+            if (Attendance::first('created_at', date('Y-m-d') . '%') == null) {
                 $absensi = null;
-            } else{
+            } else {
                 $absensi = Attendance::where([
                     ['users_id', $infoUser->id],
                 ])->get();
@@ -72,19 +72,18 @@ class AttendanceController extends Controller
                     'users_id' => $infoUser->id,
                 ]);
                 break;
-            
+
             default:
                 $absen = Attendance::where([
-                    ['in', 'like' ,date('Y-m-d').'%'],
+                    ['in', 'like', date('Y-m-d') . '%'],
                     ['users_id', $infoUser->id],
                 ])->first();
                 $absen->out = date('Y-m-d H:i:s');
                 $absen->save();
                 break;
         }
-
-        return redirect()->route('absensi.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->success('Absensi anda telah terekam dalam sistem .', 'Berhasil Absen', 'success');
+        return redirect()->route('absensi.index');
     }
 
     /**
@@ -143,14 +142,14 @@ class AttendanceController extends Controller
 
         if ($roleUser == "admin") {
             $pegawai = User::find(Auth::user()->id);
-            
+
             if (Attendance::all()) {
                 $absensi = DB::table('attendances')
                     ->join('users', 'users.id', '=', 'attendances.users_id')
                     ->select('attendances.*', 'users.*')
                     ->get();
             }
-            
+
             return view('report.attendance', compact('absensi', 'roleUser'));
         } else {
             return redirect()->route('absensi.index');

@@ -11,13 +11,12 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        // 
     }
 
     public function index()
-    {   
+    {
         $roleUser = User::find(Auth::user()->id)->roles->first()->name;
-        
+
         $employee = User::count();
 
         $item = Item::count();

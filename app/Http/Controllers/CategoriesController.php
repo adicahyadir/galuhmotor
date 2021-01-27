@@ -57,8 +57,9 @@ class CategoriesController extends Controller
             'name' => strtolower($request->name),
         ]);
 
-        return redirect()->route('kategori.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->success('Kategori telah terekam dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('kategori.index');
     }
 
     /**
@@ -70,7 +71,7 @@ class CategoriesController extends Controller
     public function show(Categories $kategori)
     {
         $data = Categories::find($kategori->id);
-        
+
         return view('categories.show', compact('data'));
     }
 
@@ -107,8 +108,9 @@ class CategoriesController extends Controller
             $data->save();
         }
 
-        return redirect()->route('kategori.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->info('Data telah terubah dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('kategori.index');
     }
 
     /**
@@ -121,7 +123,7 @@ class CategoriesController extends Controller
     {
         Categories::find($kategori->id)->delete();
 
-        return redirect()->route('kategori.index')
-            ->with('success', 'Pegawai deleted successfully');
+        alert()->success('Data telah terhapus dalam sistem .', 'Berhasil', 'success');
+        return redirect()->route('kategori.index');
     }
 }

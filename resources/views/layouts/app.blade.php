@@ -71,9 +71,11 @@
         {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     </head>
     <body>
+        @include('sweet::alert')
         <div id='loader'>
             <div class="spinner"></div>
         </div>
@@ -104,5 +106,18 @@
                 </main>
             </div>
         </div>
+        @if (Session::has('sweet_alert.alert'))
+        <script>
+          swal({
+              text: "{!! Session::get('sweet_alert.text') !!}",
+              title: "{!! Session::get('sweet_alert.title') !!}",
+              timer: {!! Session::get('sweet_alert.timer') !!},
+              icon: "{!! Session::get('sweet_alert.type') !!}",
+              buttons: "{!! Session::get('sweet_alert.buttons') !!}",
+
+              // more options
+          });
+        </script>
+        @endif
     </body>
 </html>

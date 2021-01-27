@@ -88,15 +88,16 @@ class ProfileController extends Controller
             $infoUser->address = $request->address;
             $infoUser->phone = $request->phone;
             $infoUser->save();
-    
+
             if ($request->password) {
                 User::find($id)->update([
                     'password' => Hash::make($request->password)
                 ]);
             }
 
-            return redirect()->route('profil.index')
-                ->with('success', 'Pegawai updated successfully');
+            alert()->info('Data anda telah terubah dalam sistem .', 'Berhasil', 'success');
+
+            return redirect()->route('profil.index');
         } else {
             return abort(404);
         }

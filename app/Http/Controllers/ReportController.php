@@ -35,21 +35,22 @@ class ReportController extends Controller
             case "attendance":
                 $roleName = "admin";
 
-                $resultUser = User::whereHas('roles', function($query) use ($roleName) {
-                    $query->where('name', '!=' ,$roleName);
+                $resultUser = User::whereHas('roles', function ($query) use ($roleName) {
+                    $query->where('name', '!=', $roleName);
                 })->get();
 
                 $resultAttendance = Attendance::all();
 
                 // return view('employee.report', compact('resultUser', 'resultAttendance'));
+
                 $pdf = PDF::loadView('employee.report', compact('resultUser', 'resultAttendance'));
-                return $pdf->download('-laporan_absensi.pdf');
+                return $pdf->stream(date('d-M-Y') . '_laporan-absensi.pdf');
                 break;
-            
+
             case "finance":
                 // code
                 break;
-            
+
             case "item":
                 // code
                 break;
@@ -57,7 +58,7 @@ class ReportController extends Controller
             case "transaction":
                 // code
                 break;
-                        
+
             default:
                 return redirect()->route('dashboard');
                 break;

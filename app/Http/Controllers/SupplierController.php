@@ -28,7 +28,7 @@ class SupplierController extends Controller
     public function index()
     {
         $supplier = Supplier::latest()->paginate(9);
-        
+
         return view('supplier.index', compact('supplier'));
     }
 
@@ -62,8 +62,9 @@ class SupplierController extends Controller
             'descriptions' => $request->descriptions,
         ]);
 
-        return redirect()->route('supplier.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->success('Supplier telah terekam dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('supplier.index');
     }
 
     /**
@@ -75,7 +76,7 @@ class SupplierController extends Controller
     public function show(Supplier $supplier)
     {
         $data = Supplier::find($supplier->id);
-        
+
         return view('supplier.show', compact('data'));
     }
 
@@ -113,8 +114,9 @@ class SupplierController extends Controller
         $newData->descriptions = $request->descriptions;
         $newData->save();
 
-        return redirect()->route('supplier.index')
-            ->with('success', 'Pegawai updated successfully');
+        alert()->info('Data telah terubah dalam sistem .', 'Berhasil', 'success');
+
+        return redirect()->route('supplier.index');
     }
 
     /**
