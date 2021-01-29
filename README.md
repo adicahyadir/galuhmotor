@@ -28,7 +28,7 @@ php artisan key:generate
 php artisan migrate
 php artisan migrate:fresh --seed
 php artisan serve
-open in new tab => npm run watch
+npm run watch
 ```
 
 ## Login
@@ -58,6 +58,7 @@ password: 123456
 
 TODO
 
+- [ ] Kasir
 - [ ] Kelola Keuangan
 - [ ] Laporan
 
