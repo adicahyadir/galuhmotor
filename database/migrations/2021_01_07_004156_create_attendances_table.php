@@ -15,8 +15,8 @@ class CreateAttendancesTable extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->dateTime('in')->nullable();
-            $table->dateTime('out')->nullable();
+            $table->timestamp('check_in')->nullable();
+            $table->timestamp('check_out')->nullable();
             $table->string('descriptions')->nullable();
             $table->foreignId('users_id')->constrained();
             $table->timestamps();

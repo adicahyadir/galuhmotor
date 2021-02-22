@@ -33,8 +33,8 @@
                         </button>
                     </form>
                 @else
-                    @if ($absen->in)
-                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"> {{ date('h:i A', strtotime($absen->in)) }} </p>
+                    @if ($absen->check_in)
+                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"> {{ date('h:i A', strtotime($absen->check_in)) }} </p>
                     @endif
                 @endif
                 {{-- <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"> 6389 </p> --}}
@@ -62,7 +62,7 @@
                     </form>
                 @else
                     @if ($absen)
-                        @if (!$absen->out)
+                        @if (!$absen->check_out)
                             <form method="POST" action="{{ route('absensi.store') }}">
                                 @csrf
                                 <input name="absensi" value="pulang" class="invisible" hidden></input>
@@ -74,7 +74,7 @@
                                 </button>
                             </form>
                         @else
-                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"> {{ date('h:i A', strtotime($absen->out)) }} </p>
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"> {{ date('h:i A', strtotime($absen->check_out)) }} </p>
                         @endif
                     @endif
                 @endif
@@ -114,8 +114,8 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-4 py-3 text-sm">{{ date('h:i A', strtotime($data->in)) }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ ($data->out == null) ? 'Belum Absen' : date('h:i A', strtotime($data->out)) }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ date('h:i A', strtotime($data->check_in)) }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ ($data->check_out == null) ? 'Belum Absen' : date('h:i A', strtotime($data->check_out)) }}</td>
                                     <td class="px-4 py-3 text-sm">-</td>
                                     <td class="px-4 py-3 text-sm">{{ date('j F, Y', strtotime($data->created_at)) }}</td>
                                     <td class="px-4 py-3 flex justify-center">
@@ -173,8 +173,8 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-4 py-3 text-sm">{{ date('h:i A', strtotime( $data->in )) }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ ($data->out == null) ? 'Belum Absen' : date('h:i A', strtotime($data->out)) }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ date('h:i A', strtotime( $data->check_in )) }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ ($data->check_out == null) ? 'Belum Absen' : date('h:i A', strtotime($data->check_out)) }}</td>
                                     <td class="px-4 py-3 text-sm">-</td>
                                     <td class="px-4 py-3 text-sm">{{ date('j F, Y', strtotime($data->created_at)) }}</td>
                                 </tr>

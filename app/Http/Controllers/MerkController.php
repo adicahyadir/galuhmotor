@@ -26,7 +26,7 @@ class MerkController extends Controller
      */
     public function index()
     {
-        $result = Merk::first()->paginate(9);
+        $result = Merk::first()->paginate(5);
 
         return view('merk.index', compact('result'));
     }

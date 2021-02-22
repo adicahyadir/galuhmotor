@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attendance;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Employee;
+use App\Models\Item;
 use App\Models\Merk;
 use App\Models\Merks;
 use App\Models\Pegawai;
@@ -27,12 +29,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        
+        $limit = 100;
         // \App\Models\User::factory(10)->create();
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'kasir']);
         Role::create(['name' => 'pegawai']);
-        
+
         // Admin
         User::create([
             'name' => 'Admin Dummy',
@@ -72,26 +74,31 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make(123456)
         ])->roles()->attach(Role::find(3));
 
-        foreach (range(1,50) as $index) {
+        foreach (range(1, $limit) as $index) {
             Supplier::create([
                 'name' => $faker->name,
                 'phone' => $faker->e164PhoneNumber,
                 'descriptions' => $faker->text($maxNbChars = 50),
             ]);
+
+            Categories::create([
+                'name' => $faker->realText($maxNbChars = 20, $indexSize = 2),
+            ]);
+
+            Merk::create([
+                'name' => $faker->realText($maxNbChars = 20, $indexSize = 2),
+            ]);
         };
 
-        Categories::create([
-            'name' => 'Aksesoris'
-        ]);
-        Categories::create([
-            'name' => 'Spare Part'
-        ]);
-        Merk::create([
-            'name' => 'DBS'
-        ]);
-        Merk::create([
-            'name' => 'YSS'
-        ]);
-        
+        foreach (range(1, $limit) as $index) {
+            Item::create([
+                'name' => $faker->realText($maxNbChars = 20, $indexSize = 2),
+                'qty' => $faker->numberBetween($min = 1, $max = 9999),
+                'price' => $faker->numberBetween($min = 10000, $max = 999999),
+                'merk_id' => $faker->numberBetween($min = 1, $max = $limit),
+                'categories_id' => $faker->numberBetween($min = 1, $max = $limit),
+                'supplier_id' => $faker->numberBetween($min = 1, $max = $limit),
+            ]);
+        };
     }
 }

@@ -27,7 +27,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::latest()->paginate(9);
+        $supplier = Supplier::latest()->paginate(5);
 
         return view('supplier.index', compact('supplier'));
     }

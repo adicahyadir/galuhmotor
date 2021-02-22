@@ -16,9 +16,11 @@ use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', 
-        [DashboardController::class, 'index'])
-    ->name('dashboard');
+    Route::get(
+        '/',
+        [DashboardController::class, 'index']
+    )
+        ->name('dashboard');
     /** Route Absensi **/
     Route::resource('absensi', AttendanceController::class);
     /** Route Kasir **/
@@ -35,22 +37,41 @@ Route::group(['middleware' => ['auth']], function () {
     /** Route Supplier **/
     Route::resource('supplier', SupplierController::class);
     /** Route Laporan **/
-    Route::get('laporan/absensi', 
+    Route::get(
+        'laporan/absensi',
         [AttendanceController::class, 'report']
     )->name('laporan.absensi');
-    Route::get('laporan/barang', 
+    Route::get(
+        'laporan/barang',
         [ItemController::class, 'report']
     )->name('laporan.barang');
-    Route::get('laporan/keuangan', 
+    Route::get(
+        'laporan/keuangan',
         [FinanceController::class, 'report']
     )->name('laporan.keuangan');
-    Route::get('laporan/transaksi', 
+    Route::get(
+        'laporan/transaksi',
         [TransactionController::class, 'report']
     )->name('laporan.transaksi');
-
-    Route::resource('laporan', ReportController::class);
-
+    /** Route Cetak **/
+    Route::get(
+        'laporan/absensi/cetak',
+        [AttendanceController::class, 'print']
+    )->name('cetak.absensi');
+    Route::get(
+        'laporan/barang/cetak',
+        [ItemController::class, 'print']
+    )->name('cetak.barang');
+    Route::get(
+        'laporan/keuangan/cetak',
+        [FinanceController::class, 'print']
+    )->name('cetak.keuangan');
+    Route::get(
+        'laporan/transaksi/cetak',
+        [TransactionController::class, 'print']
+    )->name('cetak.transaksi');
+    /** Route Profile **/
     Route::resource('profil', ProfileController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

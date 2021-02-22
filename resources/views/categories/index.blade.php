@@ -58,6 +58,6 @@
                 </tbody>
             </table>
         </div>
-        {{-- {!! $result->links() !!} --}}
+        {!! $result->links() !!}
     </div>
 </x-app-layout>

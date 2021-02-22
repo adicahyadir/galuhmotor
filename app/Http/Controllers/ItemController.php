@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
-use App\Models\Category;
 use App\Models\Item;
 use App\Models\Merk;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ItemController extends Controller
 {
@@ -30,7 +30,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $dataItem = Item::all();
+        $dataItem = Item::first()->paginate(5);
 
         $categories = Categories::all();
 
@@ -169,6 +169,33 @@ class ItemController extends Controller
 
     public function report()
     {
-        return view('report.item');
+        $dataItem = Item::all();
+
+        $categories = Categories::all();
+
+        $merks = Merk::all();
+
+        $suppliers = Supplier::all();
+
+        return view('report.item', compact('dataItem', 'categories', 'merks', 'suppliers'));
+    }
+
+    public function print()
+    {
+        $dataItem = Item::where([
+            // Tanggal Pertama di Bulan tertentu
+            ['created_at', '>', date('Y-m-1')],
+            // Tanggal Akhir di Bulan tertentu
+            ['created_at', '<', date('Y-m-t')],
+        ])->get();
+
+        $categories = Categories::all();
+
+        $merks = Merk::all();
+
+        $suppliers = Supplier::all();
+
+        $pdf = PDF::loadView('item.report', compact('dataItem', 'categories', 'merks', 'suppliers'));
+        return $pdf->stream(date('d-M-Y') . '_laporan-barang.pdf');
     }
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class AttendanceController extends Controller
 {
@@ -26,7 +27,7 @@ class AttendanceController extends Controller
         $absen = Attendance::where([
             ['created_at', 'like', date('Y-m-d') . '%'],
             ['users_id', $infoUser->id],
-        ])->first(['in', 'out']);
+        ])->first(['check_in', 'check_out']);
 
         if ($roleUser == "admin") {
             $absensi = DB::table('attendances')
@@ -68,17 +69,17 @@ class AttendanceController extends Controller
         switch ($request->absensi) {
             case 'datang':
                 Attendance::create([
-                    'in' => date('Y-m-d H:i:s'),
+                    'check_in' => date('Y-m-d H:i:s'),
                     'users_id' => $infoUser->id,
                 ]);
                 break;
 
             default:
                 $absen = Attendance::where([
-                    ['in', 'like', date('Y-m-d') . '%'],
+                    ['check_in', 'like', date('Y-m-d') . '%'],
                     ['users_id', $infoUser->id],
                 ])->first();
-                $absen->out = date('Y-m-d H:i:s');
+                $absen->check_out = date('Y-m-d H:i:s');
                 $absen->save();
                 break;
         }
@@ -154,5 +155,24 @@ class AttendanceController extends Controller
         } else {
             return redirect()->route('absensi.index');
         }
+    }
+
+    public function print()
+    {
+        $roleName = "admin";
+
+        $resultUser = User::whereHas('roles', function ($query) use ($roleName) {
+            $query->where('name', '!=', $roleName);
+        })->get();
+
+        $resultAttendance = Attendance::where([
+            // Tanggal Pertama di Bulan tertentu
+            ['created_at', '>', date('Y-m-1')],
+            // Tanggal Akhir di Bulan tertentu
+            ['created_at', '<', date('Y-m-t')],
+        ])->get();
+
+        $pdf = PDF::loadView('employee.report', compact('resultUser', 'resultAttendance'));
+        return $pdf->stream(date('d-M-Y') . '_laporan-absensi.pdf');
     }
 }

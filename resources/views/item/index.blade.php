@@ -49,7 +49,7 @@
                                 <td class="px-4 py-3 text-sm">{{ $category->name }}</td>
                             @endif
                         @endforeach
-                        <td class="px-4 py-3 text-sm">{{ number_format($data->price,0,',','.') }}</td>
+                        <td class="px-4 py-3 text-sm">Rp. {{ number_format($data->price,0,',','.') }} / pcs</td>
                         @foreach ($suppliers as $supplier)
                             @if ($supplier->id == $data->supplier_id)
                                 <td class="px-4 py-3 text-sm">{{ $supplier->name }}</td>
@@ -84,6 +84,6 @@
                 </tbody>
             </table>
         </div>
-        {{-- {!! $pegawai->links() !!} --}}
+        {!! $dataItem->links() !!}
     </div>
 </x-app-layout>

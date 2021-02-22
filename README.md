@@ -59,7 +59,8 @@ TODO
 
 - [ ] Kasir
 - [ ] Kelola Keuangan
-- [ ] Laporan
+- [ ] Laporan Transaksi
+- [ ] Laporan Keuangan
 
 ## Author
 

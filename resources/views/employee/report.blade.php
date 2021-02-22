@@ -37,11 +37,14 @@
         .center {
             text-align: center;
         }
+        table {
+            margin: 5px 0 5px 0;
+        }
     </style>
 </head>
 <body>
     <h1 class="center title">Galuh Motor</h1>
-    <div style="margin-top: -25%;">Dari tanggal : 
+    <div style="margin-top: -10px;">Dari tanggal : 
         <span class="bold">{{ date('1-M-Y') }}</span>
         s/d 
         <span class="bold">{{ date('t-M-Y') }}</span>
@@ -66,12 +69,47 @@
                 <td>{{ $key + 1 }}</td>
                 <td class="name"> {{ $dataUser->name }} </td>
                 <td> {{ ucfirst($dataUser->roles()->first()->name) }} </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
+                @php $total = 0; $telat = 0; $tepat = 0; $pulangAwal = 0; $pulangTepat = 0; @endphp
+                @foreach ($resultAttendance as $key => $dataAttendance)
+                @php 
+                if ($dataAttendance->users_id == $dataUser->id) {
+                    $total++;
+                    if (strtotime($dataAttendance->created_at->format('H:i')) >= strtotime('08:00:00')) {
+                        $telat++;
+                    }
+                   
+                    if (strtotime($dataAttendance->created_at->format('H:i')) <= strtotime('08:00:00')) {
+                        $tepat++;
+                    }
+
+                    if (strtotime($dataAttendance->updated_at->format('H:i')) <= strtotime('16:00:00')) {
+                        $pulangAwal++;
+                    }
+
+                    if (strtotime($dataAttendance->updated_at->format('H:i')) >= strtotime('16:00:00')) {
+                        $pulangTepat++;
+                    }
+                }
+                @endphp
+                @endforeach
+                <td>
+                    {{ date('t') - $total}}
+                </td>
+                <td>
+                    {{ $telat }}
+                </td>
+                <td>
+                    {{ $tepat }}
+                </td>
+                <td> 
+                    {{ $pulangAwal }}
+                </td>
+                <td> 
+                    {{ $pulangTepat }}
+                </td>
+                <td> 
+                    {{ $total }}
+                </td>
             </tr>
             @endforeach
         </tbody>

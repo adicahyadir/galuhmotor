@@ -12,7 +12,7 @@
     </div>
 
     <div class="mb-4 flex items-center justify-end">
-            <a href="{{ route('laporan.index', 'action=attendance') }}" class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3">
+            <a href="{{ route('cetak.absensi') }}" class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3">
             <span> {{ __('messages.print_report') }} </span>
             <svg class="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
@@ -47,10 +47,10 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-sm">{{ date('h:i A', strtotime($data->in)) }}</td>
-                                <td class="px-4 py-3 text-sm">{{ ($data->out == null) ? 'Belum Absen' : date('h:i A', strtotime($data->out)) }}</td>
+                                <td class="px-4 py-3 text-sm">{{ date('h:i A', strtotime($data->check_in)) }}</td>
+                                <td class="px-4 py-3 text-sm">{{ ($data->check_out == null) ? 'Belum Absen' : date('h:i A', strtotime($data->check_out)) }}</td>
                                 <td class="px-4 py-3 text-sm">-</td>
-                                <td class="px-4 py-3 text-sm"> {{ date('j F, Y', strtotime($data->created_at)) }} </td>
+                                <td class="px-4 py-3 text-sm">{{ date('j F, Y', strtotime($data->created_at)) }}</td>
                             </tr>
                             @endforeach
                         @else
